@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>แสดงผล API ใน HTML</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h1>ข้อมูลจาก API</h1>
+    <ul id="apiData"></ul>
+    <script>
+      var apiUrl = "http://localhost:3000/users"; // URL ของ API
+
+      // เรียก API และแสดงผล
+      fetch(apiUrl)
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("เกิดข้อผิดพลาดในการเรียก API: " + response.status);
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          var apiDataElement = document.getElementById("apiData");
+          data.forEach(function (user) {
+            var listItem = document.createElement("li");
+            listItem.textContent = user.id;
+            apiDataElement.appendChild(listItem);
+            var listItem = document.createElement("li");
+            listItem.textContent = user.username;
+            apiDataElement.appendChild(listItem);
+            var listItem = document.createElement("li");
+            listItem.textContent = user.name;
+            apiDataElement.appendChild(listItem);
+          });
+        })
+        .catch(function (error) {
+          console.error("เกิดข้อผิดพลาดในการดึงข้อมูลจาก API:", error);
+        });
+    </script>
+  </body>
+</html>
